@@ -8,14 +8,49 @@
 
 import UIKit
 
+class RefCount {
+    deinit {
+        debugPrint("deinit called")
+    }
+}
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    
+    var test1 = RefCount()
+    var test2: RefCount!
+    var test3: RefCount!
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+//        debugPrint("\(CFGetRetainCount(test1))")
+//        test2 = test1
+//        debugPrint("\(CFGetRetainCount(test1))")
+//        test3 = test1
+//        debugPrint("\(CFGetRetainCount(test1))")
+//        
+//        test2 = nil
+//        debugPrint("\(CFGetRetainCount(test1))")
+//        test3 = nil
+//        debugPrint("\(CFGetRetainCount(test1))")
+        
+//        for i in 0..<10 {
+//            testRetainCycle()
+//        }
+        
+//        for i in 0..<10 {
+//            testRetainStructs()
+//        }
+        
+//        for i in 0..<10 {
+//            testRetainWeak()
+//        }
+        
+//        let example = ClosureExample()
+
         return true
     }
 

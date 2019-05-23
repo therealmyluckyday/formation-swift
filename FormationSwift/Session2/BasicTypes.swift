@@ -584,5 +584,4 @@ func exercise2() {
      If two or more players have the same score, sort by alphabetical order
     */
     
-    
 }
