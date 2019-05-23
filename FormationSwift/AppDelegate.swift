@@ -50,6 +50,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        }
         
 //        let example = ClosureExample()
+        
+        testExcercise2()
 
         return true
     }

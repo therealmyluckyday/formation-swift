@@ -823,3 +823,175 @@ func testTypeConstraintsWithAssociatedTypes() {
     let collection = [String]()
     collection.mySpecialStringCollectionFunction()
 }
+
+// MARK: - Excercises
+
+protocol Orderable {
+    var id: String { get }
+    var price: Float { get }
+}
+extension Orderable where Self: CaseIterable {
+    static func randomItem() -> Self? {
+        return Self.allCases.randomElement()
+    }
+}
+
+enum Cafe: String, Orderable, CaseIterable {
+    
+    case espresso
+    case latte
+    case capuccino
+    
+    var id: String {
+        return rawValue
+    }
+    
+    var price: Float {
+        switch self {
+        case .espresso:
+            return 1.99
+        case .latte:
+            return 2.50
+        case .capuccino:
+            return 3.50
+        }
+    }
+}
+
+enum Doughnut: String, Orderable, CaseIterable {
+    
+    case glazed
+    case chocolate
+    case sprinkles
+    
+    var id: String {
+        return rawValue
+    }
+    
+    var price: Float {
+        switch self {
+        case .glazed:
+            return 1.0
+        case .chocolate:
+            return 1.25
+        case .sprinkles:
+            return 1.50
+        }
+    }
+}
+
+struct Order {
+    
+    let customer: Customer
+    
+    private(set) var items = [Orderable]()
+    
+    init(customer: Customer) {
+        self.customer = customer
+    }
+    
+    var total: Float {
+        return items.reduce(0, { (acc, next) -> Float in
+            return acc + next.price
+        })
+    }
+    
+    mutating func add(item: Orderable) {
+        items.append(item)
+    }
+    
+    mutating func remove(item: Orderable) {
+        guard let itemIdx = items.firstIndex(where: { $0.id == item.id }) else { return }
+        items.remove(at: itemIdx)
+    }
+}
+
+class Customer {
+    
+    func payBarista(_ barista: Barista, order: Order) -> Float {
+        return order.total
+    }
+}
+
+class Barista {
+    
+    private(set) var earnings: Float = 0
+    
+    func process(order: Order, forClient client: Customer) {
+        
+        for item in order.items {
+            switch item {
+            case let cafe as Cafe:
+                make(cafe: cafe)
+            case let doughnut as Doughnut:
+                make(doughnut: doughnut)
+            default:
+                break
+            }
+        }
+        
+        earnings += client.payBarista(self, order: order)
+    }
+    
+    private func make(cafe: Cafe) {
+        debugPrint("made cafe: \(cafe.rawValue)")
+    }
+    
+    private func make(doughnut: Doughnut) {
+        debugPrint("made doughnut: \(doughnut)")
+    }
+}
+
+/**
+ Exercise: Make the following compile
+ */
+func testExcercise1() {
+    
+    let barista = Barista()
+    
+    let client1 = Customer()
+    var order1 = Order(customer: client1)
+    order1.add(item: Cafe.capuccino)
+    order1.add(item: Cafe.espresso)
+    order1.add(item: Doughnut.glazed)
+    
+    barista.process(order: order1, forClient: client1)
+    
+    let client2 = Customer()
+    var order2 = Order(customer: client2)
+    order2.add(item: Cafe.latte)
+    order2.add(item: Doughnut.chocolate)
+    order2.add(item: Doughnut.sprinkles)
+    
+    barista.process(order: order2, forClient: client2)
+    
+    let earnings = String(format: "%.02f", barista.earnings)
+    debugPrint("Barista earned: \(barista.earnings)")
+}
+
+/**
+ Bonus exercise: make the following compile
+ */
+func testExcercise2() {
+    
+    let barista = Barista()
+    
+    for i in 0..<10 {
+        let c = Customer()
+        var order = Order(customer: c)
+        for j in 0..<Int.random(in: 1...5) {
+            if let doughnut = Doughnut.randomItem() {
+                order.add(item: doughnut)
+            }
+            if let cafe = Cafe.randomItem() {
+                order.add(item: cafe)
+            }
+        }
+        debugPrint("------------- Barista recieved a new order! -------------")
+        barista.process(order: order, forClient: c)
+    }
+    
+    debugPrint("------------- Coffe Shop is closed -------------")
+    let earnings = String(format: "%.02f", barista.earnings)
+    debugPrint("Barista earned: \(barista.earnings)")
+}
