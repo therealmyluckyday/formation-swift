@@ -52,33 +52,13 @@ extension ArticleListViewController: UITableViewDelegate, UITableViewDataSource 
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let article = data[indexPath.row]
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ArticleCell")!
-        
-        let image: UIImageView = cell.viewWithTag(1) as! UIImageView
-        setImage(imageView: image, for: article)
-        
-        let title = cell.viewWithTag(2) as! UILabel
-        title.text = article.title
-        
-        let subtitle = cell.viewWithTag(3) as! UILabel
-        subtitle.text = article.subtitle
-        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ArticleCell") as! ArticleTableViewCell
+        cell.bind(article: article)
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-    }
-    
-    private func setImage(imageView: UIImageView, for article: Article) {
-        let placeholder = UIImage(named: "image_placeholder")!
-        guard let url = URL(string: article.imageUrl) else {
-            imageView.image = placeholder
-            return
-        }
-        
-        imageView.af_setImage(withURL: url, placeholderImage: placeholder)
     }
 }
 
