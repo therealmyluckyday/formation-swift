@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Edit Article-->
+        <!--Create Article-->
         <scene sceneID="ROJ-Nf-Tia">
             <objects>
                 <viewController id="mej-TL-vw2" sceneMemberID="viewController">
@@ -20,7 +20,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="ugL-rs-QeA"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Edit Article" id="iQS-xI-OOx"/>
+                    <tabBarItem key="tabBarItem" title="Create Article" id="iQS-xI-OOx"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yIu-Pl-KHq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

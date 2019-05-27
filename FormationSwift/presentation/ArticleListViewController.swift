@@ -7,15 +7,39 @@
 //
 
 import UIKit
+import Moya
+import Result
 
 class ArticleListViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     
-    private let data = Article.testData()
+    private var data = [Article]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        AppDelegate.apiProvider.request(.allNews) { [weak self] result in
+            self?.parseArticleList(result: result)
+        }
+    }
+    
+    private func parseArticleList(result: Result<Response, MoyaError>) {
+        switch result {
+            
+        case let .success(moyaResponse):
+            do {
+                let filteredResponse = try moyaResponse.filterSuccessfulStatusCodes()
+                let articles = (try? filteredResponse.map([Article].self)) ?? []
+                data.append(contentsOf: articles)
+                tableView.reloadData()
+            } catch let error {
+                debugPrint(error.localizedDescription)
+            }
+            
+        case let .failure(error):
+            debugPrint(error.localizedDescription)
+        }
     }
 }
 

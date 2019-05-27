@@ -25,3 +25,15 @@ struct Article {
     }
     
 }
+
+extension Article: Codable {
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case title
+        case subtitle = "desc_short"
+        case content = "desc_long"
+        case imageUrl = "url_path"
+    }
+    
+}
