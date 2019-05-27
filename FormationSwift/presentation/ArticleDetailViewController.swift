@@ -16,10 +16,10 @@ class ArticleDetailViewController: UIViewController {
     @IBOutlet weak var subtitleLabel: UILabel!
     @IBOutlet weak var contentLabel: UILabel!
     
+    var article: Article?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let article = Article.testData().first
         
         setImage(for: article)
         titleLabel.text = article?.title
