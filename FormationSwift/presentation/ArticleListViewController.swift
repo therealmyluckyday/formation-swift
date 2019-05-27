@@ -19,8 +19,17 @@ class ArticleListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tableView.refreshControl = UIRefreshControl()
+        tableView.refreshControl?.addTarget(self, action: #selector(handleRefreshControl), for: .valueChanged)
+        
+        refreshNewsList()
+    }
+    
+    private func refreshNewsList() {
+        tableView.refreshControl?.beginRefreshing()
         AppDelegate.apiProvider.request(.allNews) { [weak self] result in
             self?.parseArticleList(result: result)
+            self?.tableView.refreshControl?.endRefreshing()
         }
     }
     
@@ -31,6 +40,7 @@ class ArticleListViewController: UIViewController {
             do {
                 let filteredResponse = try moyaResponse.filterSuccessfulStatusCodes()
                 let articles = (try? filteredResponse.map([Article].self)) ?? []
+                data.removeAll()
                 data.append(contentsOf: articles)
                 tableView.reloadData()
             } catch let error {
@@ -40,6 +50,10 @@ class ArticleListViewController: UIViewController {
         case let .failure(error):
             debugPrint(error.localizedDescription)
         }
+    }
+    
+    @objc private func handleRefreshControl() {
+        refreshNewsList()
     }
 }
 

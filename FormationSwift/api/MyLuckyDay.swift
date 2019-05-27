@@ -15,11 +15,13 @@ enum MyLuckyDay: TargetType {
     
     case allNews
     case news(newsId: Int)
+    case createNews(params: CreateArticleParams)
     
     var path: String {
         switch self {
         case .allNews: return "/news"
         case .news(let newsId): return "/news/\(newsId)"
+        case .createNews: return "/news"
         }
     }
     
@@ -28,6 +30,9 @@ enum MyLuckyDay: TargetType {
         case .allNews: fallthrough
         case .news:
             return .get
+            
+        case .createNews:
+            return .post
         }
     }
     
@@ -36,6 +41,9 @@ enum MyLuckyDay: TargetType {
         case .allNews: fallthrough
         case .news:
             return .requestPlain
+            
+        case let .createNews(params):
+            return .requestJSONEncodable(params)
         }
     }
     

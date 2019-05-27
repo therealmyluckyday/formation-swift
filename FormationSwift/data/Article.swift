@@ -26,7 +26,7 @@ struct Article {
     
 }
 
-extension Article: Codable {
+extension Article: Decodable {
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -35,5 +35,4 @@ extension Article: Codable {
         case content = "desc_long"
         case imageUrl = "url_path"
     }
-    
 }
