@@ -1,0 +1,6 @@
+framework module Pods_FormationSwiftUITests {
+  umbrella header "Pods-FormationSwiftUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
