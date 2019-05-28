@@ -15,8 +15,28 @@ class CreateArticleViewController: UIViewController {
     @IBOutlet weak var subtitleField: UITextField!
     @IBOutlet weak var contentView: UITextView!
     
+    private lazy var accessoryView: UIView = {
+        
+        let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        
+        let done = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismissKeyboard(_:)))
+        
+        let prev = UIBarButtonItem(barButtonSystemItem: .rewind, target: self, action: #selector(previousField(_:)))
+        let next = UIBarButtonItem(barButtonSystemItem: .fastForward, target: self, action: #selector(nextField(_:)))
+        
+        let toolbar = UIToolbar()
+        toolbar.translatesAutoresizingMaskIntoConstraints = false
+        toolbar.items = [prev, next, space, done]
+        
+        return toolbar
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        titleField.inputAccessoryView = accessoryView
+        subtitleField.inputAccessoryView = accessoryView
+        contentView.inputAccessoryView = accessoryView
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIWindow.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIWindow.keyboardWillHideNotification, object: nil)
@@ -66,6 +86,18 @@ class CreateArticleViewController: UIViewController {
                 }
             }
         }
+    }
+    
+    @objc private func dismissKeyboard(_ sender: Any?) {
+        view.endEditing(true)
+    }
+    
+    @objc private func previousField(_ sender: Any?) {
+        UIResponder.currentFirstResponder?.previousFormItem?.becomeFirstResponder()
+    }
+    
+    @objc private func nextField(_ sender: Any?) {
+        UIResponder.currentFirstResponder?.nextFormItem?.becomeFirstResponder()
     }
     
     private func clearFields() {

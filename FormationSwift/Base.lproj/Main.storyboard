@@ -29,12 +29,20 @@
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
+                                                <connections>
+                                                    <outlet property="nextFormItem" destination="qHp-Qj-BJT" id="L0G-mU-0XI"/>
+                                                    <outlet property="previousFormItem" destination="5b6-4D-7Bg" id="WVJ-zf-6rf"/>
+                                                </connections>
                                             </textField>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Subtitle" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="qHp-Qj-BJT">
                                                 <rect key="frame" x="24" y="78" width="327" height="30"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
+                                                <connections>
+                                                    <outlet property="nextFormItem" destination="5b6-4D-7Bg" id="zvv-la-TW8"/>
+                                                    <outlet property="previousFormItem" destination="acb-Wh-tRA" id="uIH-20-cGW"/>
+                                                </connections>
                                             </textField>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="5b6-4D-7Bg">
                                                 <rect key="frame" x="24" y="132" width="327" height="200"/>
@@ -44,6 +52,10 @@
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                <connections>
+                                                    <outlet property="nextFormItem" destination="acb-Wh-tRA" id="aMJ-Sc-z6W"/>
+                                                    <outlet property="previousFormItem" destination="qHp-Qj-BJT" id="1f2-yT-tuR"/>
+                                                </connections>
                                             </textView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ayy-u6-3l4">
                                                 <rect key="frame" x="47" y="356" width="281" height="30"/>
