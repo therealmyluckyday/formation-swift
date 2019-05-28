@@ -11,7 +11,8 @@ import Moya
 
 enum MyLuckyDay: TargetType {
     
-    var baseURL: URL { return URL(string: "https://catalog.mld-dev.fr/api")! }
+//    var baseURL: URL { return URL(string: "https://catalog.mld-dev.fr/api")! }
+    var baseURL: URL { return URL(string: "http://catalog.mld-dev.fr/api")! }
     
     case allNews
     case news(newsId: Int)

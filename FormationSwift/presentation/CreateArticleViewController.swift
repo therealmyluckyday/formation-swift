@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Photos
 
 class CreateArticleViewController: UIViewController {
 
@@ -42,6 +43,24 @@ class CreateArticleViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIWindow.keyboardWillHideNotification, object: nil)
     }
     
+    private func queryPhotos() {
+        PHPhotoLibrary.requestAuthorization() { [weak self] status in
+            switch status {
+            case .authorized:
+                self?.accessPhotos()
+            default:
+                break
+            }
+        }
+    }
+    
+    private func accessPhotos() {
+        let allPhotosOpts = PHFetchOptions()
+        allPhotosOpts.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
+        let allPhotos = PHAsset.fetchAssets(with: allPhotosOpts)
+        debugPrint(allPhotos)
+    }
+    
     @objc private func keyboardWillShow(_ notification: Notification) {
         
         let userInfo = notification.userInfo!
@@ -64,6 +83,8 @@ class CreateArticleViewController: UIViewController {
     }
 
     @IBAction func clickedCreate(_ sender: Any) {
+        
+//        queryPhotos(); return
         
         let params = CreateArticleParams(
             title: titleField.text,
