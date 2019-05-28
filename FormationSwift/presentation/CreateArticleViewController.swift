@@ -100,10 +100,17 @@ class CreateArticleViewController: UIViewController {
                 do {
                     let filteredResponse = try response.filterSuccessfulStatusCodes()
                     let article = try filteredResponse.map(Article.self, atKeyPath: "news")
-                    debugPrint("successfully created article: \(article.title)")
-                    self?.clearFields()
+                    
+                    let title = NSLocalizedString("Success", comment: "Create article success alert title")
+                    let messageFormat = NSLocalizedString("successfully created article: %@", comment: "Create article success alert message")
+                    let message = String(format: messageFormat, article.title)
+                    
+                    self?.showInfoAlert(title: title, message: message) { [weak self] _ in
+                        self?.clearFields()
+                    }
                 } catch let error {
-                    debugPrint(error.localizedDescription)
+                    let title = NSLocalizedString("Error", comment: "Create article failure alert title")
+                    self?.showInfoAlert(title: title, message: error.localizedDescription)
                 }
             }
         }
@@ -125,5 +132,12 @@ class CreateArticleViewController: UIViewController {
         titleField.text = nil
         subtitleField.text = nil
         contentView.text = nil
+    }
+    
+    private func showInfoAlert(title: String?, message: String?, handler: ((UIAlertAction)->())? = nil) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let ok = UIAlertAction(title: "OK", style: .default, handler: handler)
+        alertController.addAction(ok)
+        show(alertController, sender: nil)
     }
 }
