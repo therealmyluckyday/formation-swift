@@ -26,6 +26,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
+        exercise2()
+        
 //        debugPrint("\(CFGetRetainCount(test1))")
 //        test2 = test1
 //        debugPrint("\(CFGetRetainCount(test1))")
@@ -51,7 +53,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
 //        let example = ClosureExample()
         
-        testExcercise2()
+//        testExcercise2()
 
         return true
     }

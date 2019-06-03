@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 // MARK: - Basic Types
 func basicTypes() {
@@ -20,7 +21,7 @@ func basicTypes() {
      Optional
      Tuple
      */
-    let int = 42
+    let int = -42
     let uint: UInt = 42
     let uint64: UInt64 = 42
     let double = 3.14
@@ -140,7 +141,10 @@ func exercise1() {
      2. Create a mutable instance of your type alias and modify its contents
     */
     
+    typealias MyType = (index: Int, title: String, description: String?)
     
+    var test = MyType(index: 1, title: "Title", description: nil)
+    test.description = "description"
 }
 
 // MARK: - Operators
@@ -319,6 +323,7 @@ func strings() {
     /**
      Initialization
     */
+    let test: Int? = 43
     let literal = "This is a literal string"
     let initialized = String("This is a string intialized with a String literal")
     let objcLiteral: NSString = "This is an NSString"
@@ -403,7 +408,7 @@ func optionals() {
     opt = nil
     var opt2: String? = nil
     var optInt: Int? = nil
-    var optTuple: (Int,String)? = nil
+    var optTuple: (Int,String)! = nil
     
     /**
      Testing
@@ -421,6 +426,7 @@ func optionals() {
     var automaticUnwrapping: String!   // you must guarentee that dangerous will be initialized
     var forcedUnwrapping: String? = "Be careful"
     debugPrint(forcedUnwrapping!)
+    
     var greeting: String? = "Hello, world!"
     if let optionalBinding = greeting {
         debugPrint(optionalBinding)
@@ -584,4 +590,15 @@ func exercise2() {
      If two or more players have the same score, sort by alphabetical order
     */
     
+    let top3sorted = Array(
+        players.sorted { lhs, rhs in
+            if lhs.score == rhs.score {
+                return lhs.name < rhs.name
+            }
+            return lhs.score > rhs.score
+        }
+            .prefix(3)
+    )
+    
+    debugPrint(top3sorted)
 }
