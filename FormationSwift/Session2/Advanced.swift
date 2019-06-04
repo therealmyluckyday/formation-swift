@@ -951,9 +951,15 @@ func testExcercise1() {
     
     let client1 = Customer()
     var order1 = Order(customer: client1)
-    order1.add(item: Cafe.capuccino)
+    
+    let testItem: Orderable = Cafe.capuccino
+    debugPrint("testItem: (\(testItem.id), \(testItem.price))")
+    
+    order1.add(item: testItem)
     order1.add(item: Cafe.espresso)
     order1.add(item: Doughnut.glazed)
+    
+    debugPrint("order1 total is: \(order1.total)")
     
     barista.process(order: order1, forClient: client1)
     
@@ -962,6 +968,8 @@ func testExcercise1() {
     order2.add(item: Cafe.latte)
     order2.add(item: Doughnut.chocolate)
     order2.add(item: Doughnut.sprinkles)
+    
+    debugPrint("order2 total is: \(order2.total)")
     
     barista.process(order: order2, forClient: client2)
     
